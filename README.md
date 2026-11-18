@@ -10,12 +10,19 @@
 </p>
 
 <p align="center">
+  <a href="https://razorpay.me/@lonealpha">
+    <img src="https://img.shields.io/badge/Donate-Razorpay-0C2340?style=for-the-badge&logo=razorpay&logoColor=white" alt="Donate via Razorpay" />
+  </a>
+</p>
+
+<p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-it-works">How It Works</a> •
   <a href="#supported-languages--stacks">Supported Languages</a> •
   <a href="#usage--shortcuts">Usage</a> •
   <a href="#workspace-conventions">Workspace Setup</a> •
-  <a href="#under-the-hood-deep-dive">Under the Hood</a>
+  <a href="#under-the-hood-deep-dive">Under the Hood</a> •
+  <a href="#support--donate">Donate</a>
 </p>
 
 ---
