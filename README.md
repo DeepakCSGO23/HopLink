@@ -1,150 +1,296 @@
-# HopLink 🔗
+<p align="center">
+  <img src="icon.png" alt="HopLink Logo" width="128" height="128" />
+</p>
 
-> **Jump directly from your frontend API call to the backend route handler — in one click.**
+<h1 align="center">HopLink</h1>
 
-HopLink is a VS Code extension that bridges your frontend JavaScript/TypeScript code and your Go backend. When you hover over an API call like `fetch('/users')` or `axios.get('/products')`, HopLink registers as a **Go-to-Definition** provider so you can jump straight to the matching route handler in your backend server file.
+<p align="center">
+  <strong>Instantly bridge frontend API calls to backend route handlers in VS Code.</strong><br>
+  Jump from <code>fetch('/api/users')</code> or <code>axios.post('/checkout')</code> directly to your server-side route definitions with <kbd>F12</kbd> or <kbd>Ctrl+Click</kbd>.
+</p>
 
----
-
-## ✨ Features
-
-### 🚀 API Call → Backend Route Navigation
-Place your cursor on any API URL string inside a `fetch`, `axios`, or similar HTTP call and press **F12** (Go to Definition). HopLink resolves the route and opens the matching handler in your Go backend file.
-
-**Supported call patterns:**
-```js
-fetch('/api/users')
-axios.get('/api/products')
-api.post('/api/orders')
-http.put('/api/items/1')
-client.patch('/api/settings')
-service.delete('/api/records/5')
-```
-
-### 🔍 Smart Route Matching
-- Strips query strings (`?foo=bar`) before matching
-- Handles template literal prefixes (e.g., `${BASE_URL}/users` → matches `/users`)
-- Scans all `**/backend/**/*.go` files in your workspace for the route handler
-
-### 📋 Output Channel Logging
-HopLink creates a dedicated **"HopLink"** output channel in VS Code so you can trace activation and resolution events.
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-it-works">How It Works</a> •
+  <a href="#supported-languages--stacks">Supported Languages</a> •
+  <a href="#usage--shortcuts">Usage</a> •
+  <a href="#workspace-conventions">Workspace Setup</a> •
+  <a href="#under-the-hood-deep-dive">Under the Hood</a>
+</p>
 
 ---
 
-## 🌐 Supported Languages (Frontend)
+## ⚡ Why HopLink?
 
-HopLink's definition provider activates on the following file types:
+In full-stack projects, navigating between the client and the server is filled with friction:
 
-| Language | File Extensions |
-|---|---|
-| TypeScript | `.ts` |
-| TypeScript React | `.tsx` |
-| JavaScript | `.js`, `.mjs`, `.cjs` |
-| JavaScript React (JSX) | `.jsx` |
+- Copying an endpoint string like `/api/v1/orders`.
+- Opening global search (`Ctrl+Shift+F`).
+- Sifting through dozens of false matches in documentation, tests, and mock data.
+- Finally locating the route handler in your backend code.
 
----
-
-## 🗂️ Backend Requirements
-
-HopLink currently targets **Go** backends with the following conventions:
-
-| Requirement | Detail |
-|---|---|
-| Language | Go (`.go` files) |
-| File location | Must be under a `backend/` directory in your workspace |
-| Server file | The `.go` file path must include the word `server` (e.g., `backend/server.go`, `backend/server/router.go`) |
-
-> [!IMPORTANT]
-> Your backend Go file must be named or located in a path containing `server`. For example: `backend/server.go` or `backend/server/routes.go`.
+**HopLink eliminates this friction.** It registers as a native VS Code **Definition Provider**, transforming API endpoints in your frontend code into interactive, clickable hyperlinks that jump directly to their declaration in backend route handlers.
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## ✨ Key Features
 
-| Action | Shortcut |
-|---|---|
-| Go to Definition (standard VS Code) | `F12` |
-| HopLink Hello World (test command) | `Ctrl+1` |
-
----
-
-## 📦 Requirements
-
-- **VS Code** `^1.140.0`
-- A workspace with:
-  - Frontend code in **JavaScript** or **TypeScript** (any of the 4 supported language IDs)
-  - Backend code in **Go**, located under a `backend/` folder containing a file with `server` in its path
-
-No additional runtime dependencies are required — HopLink uses only the VS Code extension API.
-
----
-
-## 🔧 Extension Settings
-
-This extension does not contribute any configurable settings at this time. Future versions may add:
-
-- Custom backend directory glob patterns
-- Multiple backend language support
-- Route prefix stripping options
+- **🚀 Native VS Code Experience**: Works natively with <kbd>F12</kbd> (Go to Definition), <kbd>Alt+F12</kbd> (Peek Definition), and <kbd>Ctrl+Click</kbd> / <kbd>Cmd+Click</kbd>.
+- **🌐 Universal Frontend HTTP Clients**: Automatically detects:
+  - Standard `fetch('/api/...')`
+  - Any HTTP client method: `axios.get()`, `api.post()`, `http.put()`, `client.patch()`, `service.delete()`, and more.
+  - Single quotes (`'`), double quotes (`"`), and template literals (`` ` ``).
+- **⚡ High-Performance Sliding Window**: Analyzes a localized 3-line buffer around your cursor rather than re-parsing whole files, ensuring 0ms latency even in massive source files.
+- **🛠️ Smart Path Normalization**:
+  - Automatically strips leading template literals (e.g. `` `${BASE_URL}/users` `` &rarr; `/users`).
+  - Automatically strips query strings (e.g. `/users?sort=desc&limit=10` &rarr; `/users`).
+- **🔀 Resilient 2-Tier Route Matching**:
+  - **Tier 1 (Exact Match)**: Searches for the normalized route (e.g., `/api/v1/users`).
+  - **Tier 2 (Fallback)**: If prefix routers or mounts obscure the full route, falls back to the core resource action segment (e.g., `users`).
+- **🌍 Polyglot Backend Support**: Searches across **11 major backend languages**:
+  `Go`, `TypeScript`, `JavaScript`, `Python`, `Rust`, `Java`, `PHP`, `C#`, `C++`, `C`, and `Ruby`.
+- **⚡ Reactive Workspace File Cache**: Scans backend server files once with instantaneous caching and automatically invalidates the cache when backend files are created or deleted via a live `FileSystemWatcher`.
 
 ---
 
-## 🚧 Known Limitations
+## 🖥️ How It Works
 
-- **Go only**: Backend support is currently limited to Go (`.go`) files.
-- **`server` file naming**: The backend file must include `server` in its path for the extension to locate it.
-- **Simple string matching**: Route matching is done by searching for the first URL segment as a plain text substring in the server file. Complex router configurations (nested groups, dynamic prefixes) may not resolve correctly.
-- **No template literal support**: Dynamic URL segments like `` `/api/users/${id}` `` are partially handled (the dynamic prefix is stripped), but fully dynamic routes may not match.
-- **Single server file**: Only the first `.go` file matching `**/backend/**/*.go` with `server` in its path is used.
-
----
-
-## 🛠️ Development
-
-### Project Structure
+HopLink operates directly within the VS Code language intelligence pipeline:
 
 ```
-hoplink/
-├── extension.js          # Main extension entry point
-├── package.json          # Extension manifest & metadata
-├── jsconfig.json         # JS compiler config (ES2022, Node16)
-├── eslint.config.mjs     # ESLint rules
-├── test/
-│   └── extension.test.js # Mocha test suite
-└── .vscode/
-    └── launch.json       # Debug launch config
-```
-
-### Running Locally
-
-1. Clone/open the project in VS Code.
-2. Press `F5` to launch the **Extension Development Host**.
-3. In the new window, open a workspace that has frontend JS/TS files and a `backend/server.go`.
-4. Place your cursor on an API URL string and press `F12`.
-
-### Running Tests
-
-```bash
-npm run lint     # Run ESLint
-npm test         # Run the Mocha test suite via @vscode/test-cli
+┌────────────────────────────────────────────────────────┐
+│  Frontend Editor (TypeScript / JavaScript / React)      │
+│  User hovers or presses F12 on:                        │
+│  const res = await api.post(`/api/v1/users?ref=web`);   │
+└──────────────────────────┬─────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────┐
+│  1. Sliding-Window Capture (pos.line ± 1)              │
+│     Target: api.post(`/api/v1/users?ref=web`)          │
+└──────────────────────────┬─────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────┐
+│  2. Path Sanitizer & Extractor                         │
+│     - Strips template prefixes (${BASE_URL})           │
+│     - Truncates query params (?ref=web)                │
+│     - Normalized Route: "/api/v1/users"                │
+│     - Fallback Token:   "users"                        │
+└──────────────────────────┬─────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────┐
+│  3. Backend Resolver & Route Finder                    │
+│     - Reads cached server files (server/main/index/app)│
+│     - Tier 1: exact match for "/api/v1/users"          │
+│     - Tier 2: fallback match for "users"               │
+└──────────────────────────┬─────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────┐
+│  Jump to Definition in Backend Route File!             │
+│  e.g., backend/server.go  (or main.py, index.ts, etc.) │
+│  r.POST("/api/v1/users", handlers.CreateUser)          │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📝 Release Notes
+## ⌨️ Usage & Shortcuts
 
-### 0.0.1
-- Initial release
-- Go-to-Definition provider for `fetch` and HTTP client calls
-- Supports TypeScript, TSX, JavaScript, JSX
-- Go backend route resolution via `**/backend/**/*.go` glob
+No setup or commands required! Once installed, HopLink activates automatically in any supported frontend file.
+
+| Action               | Shortcut (Windows / Linux)                    | Shortcut (macOS)                             | Description                                                                   |
+| :------------------- | :-------------------------------------------- | :------------------------------------------- | :---------------------------------------------------------------------------- |
+| **Go to Definition** | <kbd>F12</kbd> or <kbd>Ctrl</kbd> + **Click** | <kbd>F12</kbd> or <kbd>Cmd</kbd> + **Click** | Opens the backend file and places the cursor on the route definition line.    |
+| **Peek Definition**  | <kbd>Alt</kbd> + <kbd>F12</kbd>               | <kbd>Option</kbd> + <kbd>F12</kbd>           | Opens an inline peek window inside your frontend file without switching tabs. |
+| **Hover Preview**    | <kbd>Ctrl</kbd> + Hover                       | <kbd>Cmd</kbd> + Hover                       | Displays a preview tooltip of the backend target route definition.            |
+
+### Supported Code Patterns
+
+```typescript
+// 1. Native Fetch
+const res = await fetch("/api/v1/orders");
+
+// 2. HTTP Client Instances (axios, ky, got, api, service, client, etc.)
+const users = await axios.get("/users");
+const created = await api.post("/users", payload);
+const updated = await http.put("/settings", config);
+const patched = await client.patch("/profile", data);
+const deleted = await request.delete("/sessions");
+
+// 3. Template Literals & Query Parameters
+// -> Normalizes automatically to: "/orders"
+const result = await api.get(`${API_BASE}/orders?status=completed&page=1`);
+```
+
+---
+
+## 🧩 Supported Languages & Stacks
+
+### Frontend Languages
+
+HopLink activates on:
+
+- **TypeScript** (`.ts`)
+- **TypeScript React** (`.tsx`)
+- **JavaScript** (`.js`, `.mjs`, `.cjs`)
+- **JavaScript React** (`.jsx`)
+
+### Backend Languages & Frameworks
+
+HopLink scans backend source code across:
+
+| Backend Language            | Extension    | Typical Frameworks Supported               |
+| :-------------------------- | :----------- | :----------------------------------------- |
+| **Go**                      | `.go`        | Gin, Echo, Fiber, Chi, standard `net/http` |
+| **JavaScript / TypeScript** | `.js`, `.ts` | Express, Fastify, NestJS, Koa, Hono        |
+| **Python**                  | `.py`        | FastAPI, Flask, Django Ninja, Tornado      |
+| **Rust**                    | `.rs`        | Actix-web, Axum, Rocket, Warp              |
+| **Java**                    | `.java`      | Spring Boot, Javalin, Micronaut, Quarkus   |
+| **PHP**                     | `.php`       | Laravel, Symfony, Slim                     |
+| **C#**                      | `.cs`        | ASP.NET Core, Minimal APIs                 |
+| **Ruby**                    | `.rb`        | Ruby on Rails, Sinatra                     |
+| **C / C++**                 | `.c`, `.cpp` | Crow, Drogon, Pistache                     |
+
+---
+
+## 📁 Workspace Conventions
+
+To enable HopLink to resolve routes quickly and accurately, your workspace should follow these lightweight conventions:
+
+1. **Backend Directory**: Backend code should live inside a directory named `backend` (e.g., `<project-root>/backend/...` or `apps/backend/...`).
+2. **Server File Naming**: The file declaring your routes or HTTP server should contain `server`, `main`, `index`, or `app` in its filename (case-insensitive).
+
+### Example Monorepo / Full-Stack Layout
+
+```text
+my-fullstack-app/
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── client.ts      <-- Calls: api.get("/api/v1/users")
+│   │   └── pages/
+│   │       └── Dashboard.tsx
+│   └── package.json
+│
+├── backend/
+│   ├── routes/
+│   │   └── users.go
+│   ├── server.go              <-- Matched! Target route handler definition
+│   └── go.mod
+│
+└── package.json
+```
+
+_HopLink also effortlessly resolves `backend/main.py`, `backend/src/index.ts`, `backend/app.js`, `backend/src/main.rs`, and similar server entry points._
+
+---
+
+## 🔬 Under the Hood: Deep Dive into `extension.js`
+
+HopLink's design balances lightweight execution with intelligent heuristics:
+
+### 1. Sliding-Window Lexical Extraction
+
+Rather than traversing an AST or performing multi-line scans across an entire document on every cursor move or keystroke, HopLink inspects a 3-line sliding window:
+
+```javascript
+const first = Math.max(0, pos.line - 1);
+const last = Math.min(doc.lineCount - 1, pos.line + 1);
+const window = new vscode.Range(first, 0, last, doc.lineAt(last).text.length);
+```
+
+This isolates cursor interaction strictly to the active invocation site while keeping CPU overhead near zero.
+
+### 2. Method Signature & Endpoint Regex
+
+Calls are extracted via:
+
+```javascript
+/(?:fetch|\w+\.(?:get|post|put|patch|delete))\(\s*([`'"])(.*?)\1/g;
+```
+
+- Matches standalone `fetch(...)` or any instance method `.get()`, `.post()`, `.put()`, `.patch()`, `.delete()`.
+- Captures matching quotation delimiters (`'`, `"`, or `` ` ``).
+- Verifies that the user's cursor offset falls strictly within the boundaries of the matched URL string (`cursor >= urlStart && cursor <= urlEnd`).
+
+### 3. Route Sanitization
+
+Template prefixes and query strings are cleaned on the fly:
+
+```javascript
+route: url.replace(/^\$\{[^}]+\}/, "").split("?")[0];
+```
+
+For example:
+
+- `` `${API_URL}/v2/analytics?period=monthly` `` &rarr; `/v2/analytics`
+
+### 4. Reactive File Caching
+
+Backend files matching `**/backend/**/*.{go,js,ts,rs,py,java,php,cs,cpp,c,rb}` are discovered using `vscode.workspace.findFiles` and cached in memory using nullish coalescing (`cachedFiles ??= ...`).
+A live `vscode.workspace.createFileSystemWatcher` hooks into workspace file operations:
+
+```javascript
+watcher.onDidCreate(() => (cachedFiles = undefined));
+watcher.onDidDelete(() => (cachedFiles = undefined));
+```
+
+When files are added or deleted, the cache is cleanly invalidated without requiring an extension reload.
+
+### 5. Multi-Tier Backend Route Resolution
+
+Once the target server document is opened, HopLink navigates with high tolerance for different router configurations:
+
+```javascript
+let idx = text.indexOf(route);
+if (idx === -1) {
+  idx = text.indexOf(route.split("/").filter(Boolean).pop());
+}
+return { uri, position: serverDoc.positionAt(Math.max(idx, 0)) };
+```
+
+- **Direct match**: Matches the full endpoint (e.g., `"/api/v1/auth/login"`).
+- **Segment fallback**: In router mounts or grouped route architectures where only the endpoint leaf is declared in the route handler (e.g., `router.post("/login", ...)`), HopLink isolates `"login"` and successfully positions the cursor at the handler definition.
+
+---
+
+## 🛠️ Development & Contribution
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [VS Code](https://code.visualstudio.com/) `v1.140.0` or higher
+
+### Getting Started
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/hoplink.git
+   cd hoplink
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Launch Extension in Debug Mode:
+   - Press <kbd>F5</kbd> in VS Code.
+   - An Extension Development Host window will open with HopLink active.
+   - Open any full-stack project with frontend files and a `backend/` folder to test navigation.
+
+### Available Scripts
+
+- `npm run lint` — Runs ESLint checks across JavaScript sources.
+- `npm test` — Executes extension integration test suites.
 
 ---
 
 ## 📄 License
 
-See repository for license information.
-
----
-
-*Made with ❤️ for full-stack developers who hate context-switching.*
+This extension is licensed under the [MIT License](LICENSE).

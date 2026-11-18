@@ -2,27 +2,21 @@
   "name": "hoplink",
   "displayName": "hoplink",
   "description": "",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.140.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
+  ],
   "main": "./extension.js",
-  "contributes": {
-    "commands": [{
-      "command": "hoplink.helloWorld",
-      "title": "Hello World"
-    }],
-    "keybindings": [
-      {
-        "command": "hoplink.helloWorld",
-        "key": "ctrl+1"
-      }
-    ]
-  },
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
