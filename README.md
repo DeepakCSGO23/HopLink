@@ -101,11 +101,11 @@ HopLink operates directly within the VS Code language intelligence pipeline:
 
 No setup or commands required. Once installed, HopLink activates automatically in any supported frontend file.
 
-| Action | Shortcut (Windows / Linux) | Shortcut (macOS) | Description |
-| :--- | :--- | :--- | :--- |
-| **Go to Definition** | <kbd>F12</kbd> or <kbd>Ctrl</kbd> + **Click** | <kbd>F12</kbd> or <kbd>Cmd</kbd> + **Click** | Opens the backend file and places the cursor on the route definition line. |
-| **Peek Definition** | <kbd>Alt</kbd> + <kbd>F12</kbd> | <kbd>Option</kbd> + <kbd>F12</kbd> | Opens an inline peek window inside your frontend file without switching tabs. |
-| **Hover Preview** | <kbd>Ctrl</kbd> + Hover | <kbd>Cmd</kbd> + Hover | Displays a preview tooltip of the backend target route definition. |
+| Action               | Shortcut (Windows / Linux)                    | Shortcut (macOS)                             | Description                                                                   |
+| :------------------- | :-------------------------------------------- | :------------------------------------------- | :---------------------------------------------------------------------------- |
+| **Go to Definition** | <kbd>F12</kbd> or <kbd>Ctrl</kbd> + **Click** | <kbd>F12</kbd> or <kbd>Cmd</kbd> + **Click** | Opens the backend file and places the cursor on the route definition line.    |
+| **Peek Definition**  | <kbd>Alt</kbd> + <kbd>F12</kbd>               | <kbd>Option</kbd> + <kbd>F12</kbd>           | Opens an inline peek window inside your frontend file without switching tabs. |
+| **Hover Preview**    | <kbd>Ctrl</kbd> + Hover                       | <kbd>Cmd</kbd> + Hover                       | Displays a preview tooltip of the backend target route definition.            |
 
 ### Supported Code Patterns
 
@@ -142,17 +142,17 @@ HopLink activates on:
 
 HopLink scans backend source code across:
 
-| Backend Language | Extension | Typical Frameworks Supported |
-| :--- | :--- | :--- |
-| **Go** | `.go` | Gin, Echo, Fiber, Chi, standard `net/http` |
-| **JavaScript / TypeScript** | `.js`, `.ts` | Express, Fastify, NestJS, Koa, Hono |
-| **Python** | `.py` | FastAPI, Flask, Django Ninja, Tornado |
-| **Rust** | `.rs` | Actix-web, Axum, Rocket, Warp |
-| **Java** | `.java` | Spring Boot, Javalin, Micronaut, Quarkus |
-| **PHP** | `.php` | Laravel, Symfony, Slim |
-| **C#** | `.cs` | ASP.NET Core, Minimal APIs |
-| **Ruby** | `.rb` | Ruby on Rails, Sinatra |
-| **C / C++** | `.c`, `.cpp` | Crow, Drogon, Pistache |
+| Backend Language            | Extension    | Typical Frameworks Supported               |
+| :-------------------------- | :----------- | :----------------------------------------- |
+| **Go**                      | `.go`        | Gin, Echo, Fiber, Chi, standard `net/http` |
+| **JavaScript / TypeScript** | `.js`, `.ts` | Express, Fastify, NestJS, Koa, Hono        |
+| **Python**                  | `.py`        | FastAPI, Flask, Django Ninja, Tornado      |
+| **Rust**                    | `.rs`        | Actix-web, Axum, Rocket, Warp              |
+| **Java**                    | `.java`      | Spring Boot, Javalin, Micronaut, Quarkus   |
+| **PHP**                     | `.php`       | Laravel, Symfony, Slim                     |
+| **C#**                      | `.cs`        | ASP.NET Core, Minimal APIs                 |
+| **Ruby**                    | `.rb`        | Ruby on Rails, Sinatra                     |
+| **C / C++**                 | `.c`, `.cpp` | Crow, Drogon, Pistache                     |
 
 ---
 
@@ -269,7 +269,7 @@ return { uri, position: serverDoc.positionAt(Math.max(idx, 0)) };
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/hoplink.git
+   git clone https://github.com/DeepakCSGO23/HopLink.git
    cd hoplink
    ```
 
