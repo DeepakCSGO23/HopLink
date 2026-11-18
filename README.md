@@ -20,7 +20,7 @@
 
 ---
 
-## ⚡ Why HopLink?
+## Why HopLink?
 
 In full-stack projects, navigating between the client and the server is filled with friction:
 
@@ -33,27 +33,27 @@ In full-stack projects, navigating between the client and the server is filled w
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- **🚀 Native VS Code Experience**: Works natively with <kbd>F12</kbd> (Go to Definition), <kbd>Alt+F12</kbd> (Peek Definition), and <kbd>Ctrl+Click</kbd> / <kbd>Cmd+Click</kbd>.
-- **🌐 Universal Frontend HTTP Clients**: Automatically detects:
+- **Native VS Code Experience**: Works natively with <kbd>F12</kbd> (Go to Definition), <kbd>Alt+F12</kbd> (Peek Definition), and <kbd>Ctrl+Click</kbd> / <kbd>Cmd+Click</kbd>.
+- **Universal Frontend HTTP Clients**: Automatically detects:
   - Standard `fetch('/api/...')`
   - Any HTTP client method: `axios.get()`, `api.post()`, `http.put()`, `client.patch()`, `service.delete()`, and more.
   - Single quotes (`'`), double quotes (`"`), and template literals (`` ` ``).
-- **⚡ High-Performance Sliding Window**: Analyzes a localized 3-line buffer around your cursor rather than re-parsing whole files, ensuring 0ms latency even in massive source files.
-- **🛠️ Smart Path Normalization**:
+- **High-Performance Sliding Window**: Analyzes a localized 3-line buffer around your cursor rather than re-parsing whole files, ensuring 0ms latency even in massive source files.
+- **Smart Path Normalization**:
   - Automatically strips leading template literals (e.g. `` `${BASE_URL}/users` `` &rarr; `/users`).
   - Automatically strips query strings (e.g. `/users?sort=desc&limit=10` &rarr; `/users`).
-- **🔀 Resilient 2-Tier Route Matching**:
+- **Resilient 2-Tier Route Matching**:
   - **Tier 1 (Exact Match)**: Searches for the normalized route (e.g., `/api/v1/users`).
   - **Tier 2 (Fallback)**: If prefix routers or mounts obscure the full route, falls back to the core resource action segment (e.g., `users`).
-- **🌍 Polyglot Backend Support**: Searches across **11 major backend languages**:
+- **Polyglot Backend Support**: Searches across **11 major backend languages**:
   `Go`, `TypeScript`, `JavaScript`, `Python`, `Rust`, `Java`, `PHP`, `C#`, `C++`, `C`, and `Ruby`.
-- **⚡ Reactive Workspace File Cache**: Scans backend server files once with instantaneous caching and automatically invalidates the cache when backend files are created or deleted via a live `FileSystemWatcher`.
+- **Reactive Workspace File Cache**: Scans backend server files once with instantaneous caching and automatically invalidates the cache when backend files are created or deleted via a live `FileSystemWatcher`.
 
 ---
 
-## 🖥️ How It Works
+## How It Works
 
 HopLink operates directly within the VS Code language intelligence pipeline:
 
@@ -97,15 +97,15 @@ HopLink operates directly within the VS Code language intelligence pipeline:
 
 ---
 
-## ⌨️ Usage & Shortcuts
+## Usage & Shortcuts
 
-No setup or commands required! Once installed, HopLink activates automatically in any supported frontend file.
+No setup or commands required. Once installed, HopLink activates automatically in any supported frontend file.
 
-| Action               | Shortcut (Windows / Linux)                    | Shortcut (macOS)                             | Description                                                                   |
-| :------------------- | :-------------------------------------------- | :------------------------------------------- | :---------------------------------------------------------------------------- |
-| **Go to Definition** | <kbd>F12</kbd> or <kbd>Ctrl</kbd> + **Click** | <kbd>F12</kbd> or <kbd>Cmd</kbd> + **Click** | Opens the backend file and places the cursor on the route definition line.    |
-| **Peek Definition**  | <kbd>Alt</kbd> + <kbd>F12</kbd>               | <kbd>Option</kbd> + <kbd>F12</kbd>           | Opens an inline peek window inside your frontend file without switching tabs. |
-| **Hover Preview**    | <kbd>Ctrl</kbd> + Hover                       | <kbd>Cmd</kbd> + Hover                       | Displays a preview tooltip of the backend target route definition.            |
+| Action | Shortcut (Windows / Linux) | Shortcut (macOS) | Description |
+| :--- | :--- | :--- | :--- |
+| **Go to Definition** | <kbd>F12</kbd> or <kbd>Ctrl</kbd> + **Click** | <kbd>F12</kbd> or <kbd>Cmd</kbd> + **Click** | Opens the backend file and places the cursor on the route definition line. |
+| **Peek Definition** | <kbd>Alt</kbd> + <kbd>F12</kbd> | <kbd>Option</kbd> + <kbd>F12</kbd> | Opens an inline peek window inside your frontend file without switching tabs. |
+| **Hover Preview** | <kbd>Ctrl</kbd> + Hover | <kbd>Cmd</kbd> + Hover | Displays a preview tooltip of the backend target route definition. |
 
 ### Supported Code Patterns
 
@@ -127,7 +127,7 @@ const result = await api.get(`${API_BASE}/orders?status=completed&page=1`);
 
 ---
 
-## 🧩 Supported Languages & Stacks
+## Supported Languages & Stacks
 
 ### Frontend Languages
 
@@ -142,21 +142,21 @@ HopLink activates on:
 
 HopLink scans backend source code across:
 
-| Backend Language            | Extension    | Typical Frameworks Supported               |
-| :-------------------------- | :----------- | :----------------------------------------- |
-| **Go**                      | `.go`        | Gin, Echo, Fiber, Chi, standard `net/http` |
-| **JavaScript / TypeScript** | `.js`, `.ts` | Express, Fastify, NestJS, Koa, Hono        |
-| **Python**                  | `.py`        | FastAPI, Flask, Django Ninja, Tornado      |
-| **Rust**                    | `.rs`        | Actix-web, Axum, Rocket, Warp              |
-| **Java**                    | `.java`      | Spring Boot, Javalin, Micronaut, Quarkus   |
-| **PHP**                     | `.php`       | Laravel, Symfony, Slim                     |
-| **C#**                      | `.cs`        | ASP.NET Core, Minimal APIs                 |
-| **Ruby**                    | `.rb`        | Ruby on Rails, Sinatra                     |
-| **C / C++**                 | `.c`, `.cpp` | Crow, Drogon, Pistache                     |
+| Backend Language | Extension | Typical Frameworks Supported |
+| :--- | :--- | :--- |
+| **Go** | `.go` | Gin, Echo, Fiber, Chi, standard `net/http` |
+| **JavaScript / TypeScript** | `.js`, `.ts` | Express, Fastify, NestJS, Koa, Hono |
+| **Python** | `.py` | FastAPI, Flask, Django Ninja, Tornado |
+| **Rust** | `.rs` | Actix-web, Axum, Rocket, Warp |
+| **Java** | `.java` | Spring Boot, Javalin, Micronaut, Quarkus |
+| **PHP** | `.php` | Laravel, Symfony, Slim |
+| **C#** | `.cs` | ASP.NET Core, Minimal APIs |
+| **Ruby** | `.rb` | Ruby on Rails, Sinatra |
+| **C / C++** | `.c`, `.cpp` | Crow, Drogon, Pistache |
 
 ---
 
-## 📁 Workspace Conventions
+## Workspace Conventions
 
 To enable HopLink to resolve routes quickly and accurately, your workspace should follow these lightweight conventions:
 
@@ -188,7 +188,7 @@ _HopLink also effortlessly resolves `backend/main.py`, `backend/src/index.ts`, `
 
 ---
 
-## 🔬 Under the Hood: Deep Dive into `extension.js`
+## Under the Hood: Deep Dive into `extension.js`
 
 HopLink's design balances lightweight execution with intelligent heuristics:
 
@@ -257,7 +257,7 @@ return { uri, position: serverDoc.positionAt(Math.max(idx, 0)) };
 
 ---
 
-## 🛠️ Development & Contribution
+## Development & Contribution
 
 ### Prerequisites
 
@@ -291,6 +291,6 @@ return { uri, position: serverDoc.positionAt(Math.max(idx, 0)) };
 
 ---
 
-## 📄 License
+## License
 
 This extension is licensed under the [MIT License](LICENSE).
