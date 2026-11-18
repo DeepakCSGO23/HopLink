@@ -293,4 +293,4 @@ return { uri, position: serverDoc.positionAt(Math.max(idx, 0)) };
 
 ## License
 
-This extension is licensed under the [MIT License](LICENSE).
+This extension is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html).

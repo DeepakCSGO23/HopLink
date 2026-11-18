@@ -1,8 +1,14 @@
 {
   "name": "hoplink",
-  "displayName": "hoplink",
-  "description": "",
+  "displayName": "HopLink",
+  "description": "Instantly bridge frontend API calls to backend route definitions in VS Code.",
   "version": "1.0.0",
+  "license": "AGPL-3.0-or-later",
+  "publisher": "DeepakCSGO23",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DeepakCSGO23/HopLink.git"
+  },
   "icon": "icon.png",
   "engines": {
     "vscode": "^1.140.0"
