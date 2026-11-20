@@ -1,8 +1,8 @@
 {
   "name": "hoplink",
-  "displayName": "HopLink",
-  "description": "Instantly bridge frontend API calls to backend route definitions in VS Code.",
-  "version": "1.0.2",
+  "displayName": "HopLink - Go to Backend API Route Definition",
+  "description": "Instantly jump from frontend fetch and axios API calls directly to backend route definitions in Go, Python, Node, Rust, and more.",
+  "version": "1.0.3",
   "license": "AGPL-3.0-or-later",
   "publisher": "DeepakKN",
   "repository": {
@@ -14,7 +14,19 @@
     "vscode": "^1.140.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
+  ],
+  "keywords": [
+    "api",
+    "route",
+    "navigation",
+    "go to definition",
+    "definition",
+    "fullstack",
+    "backend",
+    "endpoint",
+    "fetch",
+    "axios"
   ],
   "activationEvents": [
     "onLanguage:javascript",
